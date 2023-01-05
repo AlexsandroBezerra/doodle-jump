@@ -16,7 +16,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 7, 4.5 )
 
-[node name="spring" type="StaticBody2D"]
+[node name="spring" type="StaticBody2D" groups=["platform"]]
 script = ExtResource( 4 )
 jump_force = 1.5
 

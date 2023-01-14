@@ -13,6 +13,10 @@ config_version=4
 config/name="DoodleJump"
 run/main_scene="res://scenes/doodle_jump.tscn"
 
+[debug]
+
+gdscript/warnings/unused_class_variable=true
+
 [display]
 
 window/size/width=180
@@ -21,7 +25,11 @@ window/size/test_width=360
 window/size/test_height=640
 window/handheld/orientation="portrait"
 window/stretch/mode="2d"
-window/stretch/aspect="keep"
+window/stretch/aspect="expand"
+
+[global]
+
+extenal=false
 
 [gui]
 
@@ -52,14 +60,12 @@ ui_focus_prev={
 ui_left={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":14,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 ui_right={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":15,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
@@ -87,6 +93,14 @@ ui_end={
 "deadzone": 0.5,
 "events": [  ]
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[locale]
+
+fallback="pt_PT"
 
 [physics]
 

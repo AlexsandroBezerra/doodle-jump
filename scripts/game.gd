@@ -2,8 +2,10 @@ extends Node2D
 
 onready var player := get_node("player")
 onready var camera := get_node("camera")
-onready var platform_container := get_node("platform_container")
-onready var platform_y = get_node("platform_container/platform").position.y
+onready var score_label := get_node("ui/score")
+onready var platform_container := get_node("platforms_container")
+onready var platform_y = get_node("platforms_container/platform").position.y
+onready var camera_initial_y = camera.position.y
 
 const DEFAULT_PLATFORM_INDEX = -1
 
@@ -12,11 +14,15 @@ var last_platform_variation := DEFAULT_PLATFORM_INDEX
 export (PackedScene) var default_platform
 export (Array, PackedScene) var platform_variations
 
+var score = 0
+
 func _ready():
 	randomize()
 	generate_platforms(15)
 
 func _physics_process(_delta: float):
+	score_update()
+	
 	if player.position.y < camera.position.y:
 		camera.position.y = player.position.y
 
@@ -43,13 +49,16 @@ func generate_platform(platform: StaticBody2D, variation: int):
 	platform_container.call_deferred("add_child", platform)
 	last_platform_variation = variation
 
-func _on_platform_cleaner_body_entered(body: Node):
-	if body.is_in_group("player"):
-		game_over()
-	elif body.is_in_group("platform"):
-		generate_platforms()
-		body.queue_free()
-
 func game_over():
 	print("Game over!")
 	var _error = get_tree().reload_current_scene()
+
+func score_update():
+	score = int(camera_initial_y - camera.position.y)
+	score_label.text = str(score)
+
+func _on_platforms_container_child_exiting_tree(_node: Node):
+	generate_platforms()
+
+func _on_visibility_notifier_screen_exited():
+	game_over()

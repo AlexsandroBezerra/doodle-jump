@@ -1,35 +1,65 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://actors/player_green.tscn" type="PackedScene" id=1]
 [ext_resource path="res://platforms/platform.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/game.gd" type="Script" id=3]
 [ext_resource path="res://platforms/spring.tscn" type="PackedScene" id=4]
 [ext_resource path="res://platforms/cloud.tscn" type="PackedScene" id=5]
+[ext_resource path="res://fonts/Kenney Pixel.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://assets/background.png" type="Texture" id=7]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 90.75, 10 )
+[sub_resource type="DynamicFont" id=2]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
 
 [node name="doodle_jump" type="Node2D"]
 script = ExtResource( 3 )
 default_platform = ExtResource( 2 )
 platform_variations = [ ExtResource( 4 ), ExtResource( 5 ) ]
 
-[node name="platform_container" type="Node2D" parent="."]
+[node name="camera" type="Camera2D" parent="."]
+position = Vector2( 90, 160 )
+current = true
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
 
-[node name="platform" parent="platform_container" instance=ExtResource( 2 )]
+[node name="background" type="Sprite" parent="camera"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+
+[node name="platforms_container" type="Node2D" parent="."]
+
+[node name="platform" parent="platforms_container" instance=ExtResource( 2 )]
 position = Vector2( 89, 299 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 89, 266 )
 
-[node name="camera" type="Camera2D" parent="."]
-position = Vector2( 90, 160 )
-current = true
+[node name="visibility_notifier" type="VisibilityNotifier2D" parent="player"]
+position = Vector2( 0, -11.5 )
+scale = Vector2( 1, 1.15 )
 
-[node name="platform_cleaner" type="Area2D" parent="camera"]
+[node name="ui" type="CanvasLayer" parent="."]
 
-[node name="collision" type="CollisionShape2D" parent="camera/platform_cleaner"]
-position = Vector2( 1, 173 )
-shape = SubResource( 1 )
+[node name="score" type="Label" parent="ui"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -6.0
+margin_top = -135.0
+margin_right = 6.0
+margin_bottom = -111.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 2 )
+text = "0"
+align = 1
+valign = 1
 
-[connection signal="body_entered" from="camera/platform_cleaner" to="." method="_on_platform_cleaner_body_entered"]
+[connection signal="child_exiting_tree" from="platforms_container" to="." method="_on_platforms_container_child_exiting_tree"]
+[connection signal="screen_exited" from="player/visibility_notifier" to="." method="_on_visibility_notifier_screen_exited"]

@@ -14,7 +14,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 7, 4.5 )
+extents = Vector2( 7, 8.5 )
 
 [node name="spring" type="StaticBody2D" groups=["platform"]]
 script = ExtResource( 4 )
@@ -28,8 +28,13 @@ position = Vector2( 0, -16 )
 frames = SubResource( 1 )
 
 [node name="collision" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -4.5 )
+position = Vector2( 0, -1.5 )
 shape = SubResource( 2 )
 one_way_collision = true
 
+[node name="visibility_notifier" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -1.19209e-07, -5 )
+scale = Vector2( 0.7, 1.2 )
+
 [connection signal="animation_finished" from="spring_sprite" to="." method="_on_spring_sprite_animation_finished"]
+[connection signal="screen_exited" from="visibility_notifier" to="." method="_on_notifier_screen_exited"]

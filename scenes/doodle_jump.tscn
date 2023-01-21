@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://actors/player_green.tscn" type="PackedScene" id=1]
 [ext_resource path="res://platforms/platform.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://platforms/cloud.tscn" type="PackedScene" id=5]
 [ext_resource path="res://fonts/Kenney Pixel.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/background.png" type="Texture" id=7]
+[ext_resource path="res://actors/enemy.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=2]
 size = 32
@@ -60,6 +61,9 @@ custom_fonts/font = SubResource( 2 )
 text = "0"
 align = 1
 valign = 1
+
+[node name="enemy" parent="." instance=ExtResource( 8 )]
+position = Vector2( 63, 169 )
 
 [connection signal="child_exiting_tree" from="platforms_container" to="." method="_on_platforms_container_child_exiting_tree"]
 [connection signal="screen_exited" from="player/visibility_notifier" to="." method="_on_visibility_notifier_screen_exited"]

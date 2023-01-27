@@ -22,17 +22,17 @@ func _ready():
 
 func _physics_process(_delta: float):
 	score_update()
-	
+
 	if player.position.y < camera.position.y:
 		camera.position.y = player.position.y
 
 func generate_platforms(amount := 1):
 	for items in amount:
 		var is_variation := randi() % 2
-		
+
 		if is_variation == 1:
 			var variation = randi() % platform_variations.size()
-			
+
 			if last_platform_variation == variation:
 				generate_platform(default_platform.instance(), DEFAULT_PLATFORM_INDEX)
 			else:
@@ -43,15 +43,11 @@ func generate_platforms(amount := 1):
 func generate_platform(platform: StaticBody2D, variation: int):
 	var platform_x = rand_range(20, 160)
 	platform_y -= rand_range(36, 54)
-		
+
 	platform.position = Vector2(platform_x, platform_y)
-	
+
 	platform_container.call_deferred("add_child", platform)
 	last_platform_variation = variation
-
-func game_over():
-	print("Game over!")
-	var _error = get_tree().reload_current_scene()
 
 func score_update():
 	score = int(camera_initial_y - camera.position.y)
@@ -61,4 +57,5 @@ func _on_platforms_container_child_exiting_tree(_node: Node):
 	generate_platforms()
 
 func _on_visibility_notifier_screen_exited():
-	game_over()
+	if player.has_method("game_over"):
+		player.game_over()

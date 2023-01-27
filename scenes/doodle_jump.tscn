@@ -18,7 +18,7 @@ font_data = ExtResource( 6 )
 [node name="doodle_jump" type="Node2D"]
 script = ExtResource( 3 )
 default_platform = ExtResource( 2 )
-platform_variations = [ ExtResource( 4 ), ExtResource( 5 ) ]
+platform_variations = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ) ]
 
 [node name="camera" type="Camera2D" parent="."]
 position = Vector2( 90, 160 )
@@ -61,9 +61,6 @@ custom_fonts/font = SubResource( 2 )
 text = "0"
 align = 1
 valign = 1
-
-[node name="enemy" parent="." instance=ExtResource( 8 )]
-position = Vector2( 63, 169 )
 
 [connection signal="child_exiting_tree" from="platforms_container" to="." method="_on_platforms_container_child_exiting_tree"]
 [connection signal="screen_exited" from="player/visibility_notifier" to="." method="_on_visibility_notifier_screen_exited"]
